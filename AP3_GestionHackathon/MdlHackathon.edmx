@@ -1,0 +1,474 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MdlHackathon.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ADMINISTRATEUR">
+          <Key>
+            <PropertyRef Name="idadministrateur" />
+          </Key>
+          <Property Name="idadministrateur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="prenom" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="motpasse" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="EQUIPE">
+          <Key>
+            <PropertyRef Name="idequipe" />
+          </Key>
+          <Property Name="idequipe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nomequipe" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="lienprototype" Type="varchar" MaxLength="255" />
+          <Property Name="nbparticipants" Type="bigint" />
+          <Property Name="login" Type="varchar" MaxLength="255" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="HACKATHON">
+          <Key>
+            <PropertyRef Name="idhackathon" />
+          </Key>
+          <Property Name="idhackathon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateheuredebuth" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="dateheurefinh" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="lieu" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="ville" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="conditions" Type="varchar" MaxLength="255" />
+          <Property Name="thematique" Type="varchar" MaxLength="128" />
+          <Property Name="affiche" Type="varchar" MaxLength="255" />
+          <Property Name="objectifs" Type="varchar" MaxLength="255" />
+          <Property Name="idorganisateur" Type="int" />
+        </EntityType>
+        <EntityType Name="INSCRIRE">
+          <Key>
+            <PropertyRef Name="idhackathon" />
+            <PropertyRef Name="idequipe" />
+          </Key>
+          <Property Name="idhackathon" Type="int" Nullable="false" />
+          <Property Name="idequipe" Type="int" Nullable="false" />
+          <Property Name="dateinscription" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MEMBRE">
+          <Key>
+            <PropertyRef Name="idmembre" />
+          </Key>
+          <Property Name="idmembre" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idequipe" Type="int" />
+          <Property Name="nom" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="prenom" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="telephone" Type="varchar" MaxLength="128" />
+          <Property Name="datenaissance" Type="date" />
+          <Property Name="lienportfolio" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="ORGANISATEUR">
+          <Key>
+            <PropertyRef Name="idorganisateur" />
+          </Key>
+          <Property Name="idorganisateur" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nom" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="prenom" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TOKEN">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="idequipe" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="hackathon_ibfk_1">
+          <End Role="ORGANISATEUR" Type="Self.ORGANISATEUR" Multiplicity="0..1" />
+          <End Role="HACKATHON" Type="Self.HACKATHON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORGANISATEUR">
+              <PropertyRef Name="idorganisateur" />
+            </Principal>
+            <Dependent Role="HACKATHON">
+              <PropertyRef Name="idorganisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="inscrire_ibfk_1">
+          <End Role="HACKATHON" Type="Self.HACKATHON" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="INSCRIRE" Type="Self.INSCRIRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HACKATHON">
+              <PropertyRef Name="idhackathon" />
+            </Principal>
+            <Dependent Role="INSCRIRE">
+              <PropertyRef Name="idhackathon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="inscrire_ibfk_2">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="INSCRIRE" Type="Self.INSCRIRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="INSCRIRE">
+              <PropertyRef Name="idequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="membre_ibfk_2">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="MEMBRE">
+              <PropertyRef Name="idequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="token_ibfk_1">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TOKEN" Type="Self.TOKEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="TOKEN">
+              <PropertyRef Name="idequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MdlHackathonStoreContainer">
+          <EntitySet Name="ADMINISTRATEUR" EntityType="Self.ADMINISTRATEUR" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <EntitySet Name="EQUIPE" EntityType="Self.EQUIPE" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <EntitySet Name="HACKATHON" EntityType="Self.HACKATHON" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <EntitySet Name="INSCRIRE" EntityType="Self.INSCRIRE" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <EntitySet Name="ORGANISATEUR" EntityType="Self.ORGANISATEUR" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <EntitySet Name="TOKEN" EntityType="Self.TOKEN" Schema="AP3_BD_HACKATHON_INITIAL" store:Type="Tables" />
+          <AssociationSet Name="hackathon_ibfk_1" Association="Self.hackathon_ibfk_1">
+            <End Role="ORGANISATEUR" EntitySet="ORGANISATEUR" />
+            <End Role="HACKATHON" EntitySet="HACKATHON" />
+          </AssociationSet>
+          <AssociationSet Name="inscrire_ibfk_1" Association="Self.inscrire_ibfk_1">
+            <End Role="HACKATHON" EntitySet="HACKATHON" />
+            <End Role="INSCRIRE" EntitySet="INSCRIRE" />
+          </AssociationSet>
+          <AssociationSet Name="inscrire_ibfk_2" Association="Self.inscrire_ibfk_2">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="INSCRIRE" EntitySet="INSCRIRE" />
+          </AssociationSet>
+          <AssociationSet Name="membre_ibfk_2" Association="Self.membre_ibfk_2">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+          </AssociationSet>
+          <AssociationSet Name="token_ibfk_1" Association="Self.token_ibfk_1">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="TOKEN" EntitySet="TOKEN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MdlHackathon" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ADMINISTRATEUR">
+          <Key>
+            <PropertyRef Name="idadministrateur" />
+          </Key>
+          <Property Name="idadministrateur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="motpasse" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="EQUIPE">
+          <Key>
+            <PropertyRef Name="idequipe" />
+          </Key>
+          <Property Name="idequipe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nomequipe" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lienprototype" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="nbparticipants" Type="Int64" />
+          <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="INSCRIRE" Relationship="Self.inscrire_ibfk_2" FromRole="EQUIPE" ToRole="INSCRIRE" />
+          <NavigationProperty Name="MEMBRE" Relationship="Self.membre_ibfk_2" FromRole="EQUIPE" ToRole="MEMBRE" />
+          <NavigationProperty Name="TOKEN" Relationship="Self.token_ibfk_1" FromRole="EQUIPE" ToRole="TOKEN" />
+        </EntityType>
+        <EntityType Name="HACKATHON">
+          <Key>
+            <PropertyRef Name="idhackathon" />
+          </Key>
+          <Property Name="idhackathon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateheuredebuth" Type="DateTime" Nullable="false" />
+          <Property Name="dateheurefinh" Type="DateTime" Nullable="false" />
+          <Property Name="lieu" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ville" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="conditions" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="thematique" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="affiche" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="objectifs" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="idorganisateur" Type="Int32" />
+          <NavigationProperty Name="ORGANISATEUR" Relationship="Self.hackathon_ibfk_1" FromRole="HACKATHON" ToRole="ORGANISATEUR" />
+          <NavigationProperty Name="INSCRIRE" Relationship="Self.inscrire_ibfk_1" FromRole="HACKATHON" ToRole="INSCRIRE" />
+        </EntityType>
+        <EntityType Name="INSCRIRE">
+          <Key>
+            <PropertyRef Name="idhackathon" />
+            <PropertyRef Name="idequipe" />
+          </Key>
+          <Property Name="idhackathon" Type="Int32" Nullable="false" />
+          <Property Name="idequipe" Type="Int32" Nullable="false" />
+          <Property Name="dateinscription" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="EQUIPE" Relationship="Self.inscrire_ibfk_2" FromRole="INSCRIRE" ToRole="EQUIPE" />
+          <NavigationProperty Name="HACKATHON" Relationship="Self.inscrire_ibfk_1" FromRole="INSCRIRE" ToRole="HACKATHON" />
+        </EntityType>
+        <EntityType Name="MEMBRE">
+          <Key>
+            <PropertyRef Name="idmembre" />
+          </Key>
+          <Property Name="idmembre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idequipe" Type="Int32" />
+          <Property Name="nom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telephone" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="datenaissance" Type="DateTime" />
+          <Property Name="lienportfolio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EQUIPE" Relationship="Self.membre_ibfk_2" FromRole="MEMBRE" ToRole="EQUIPE" />
+        </EntityType>
+        <EntityType Name="ORGANISATEUR">
+          <Key>
+            <PropertyRef Name="idorganisateur" />
+          </Key>
+          <Property Name="idorganisateur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="prenom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HACKATHON" Relationship="Self.hackathon_ibfk_1" FromRole="ORGANISATEUR" ToRole="HACKATHON" />
+        </EntityType>
+        <EntityType Name="TOKEN">
+          <Key>
+            <PropertyRef Name="uuid" />
+          </Key>
+          <Property Name="uuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idequipe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EQUIPE" Relationship="Self.token_ibfk_1" FromRole="TOKEN" ToRole="EQUIPE" />
+        </EntityType>
+        <Association Name="inscrire_ibfk_2">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="INSCRIRE" Type="Self.INSCRIRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="INSCRIRE">
+              <PropertyRef Name="idequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="membre_ibfk_2">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="MEMBRE">
+              <PropertyRef Name="idequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="token_ibfk_1">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="TOKEN" Type="Self.TOKEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="TOKEN">
+              <PropertyRef Name="idequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hackathon_ibfk_1">
+          <End Role="ORGANISATEUR" Type="Self.ORGANISATEUR" Multiplicity="0..1" />
+          <End Role="HACKATHON" Type="Self.HACKATHON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORGANISATEUR">
+              <PropertyRef Name="idorganisateur" />
+            </Principal>
+            <Dependent Role="HACKATHON">
+              <PropertyRef Name="idorganisateur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="inscrire_ibfk_1">
+          <End Role="HACKATHON" Type="Self.HACKATHON" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="INSCRIRE" Type="Self.INSCRIRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HACKATHON">
+              <PropertyRef Name="idhackathon" />
+            </Principal>
+            <Dependent Role="INSCRIRE">
+              <PropertyRef Name="idhackathon" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AP3_BD_HACKATHON_INITIALEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ADMINISTRATEUR" EntityType="Self.ADMINISTRATEUR" />
+          <EntitySet Name="EQUIPE" EntityType="Self.EQUIPE" />
+          <EntitySet Name="HACKATHON" EntityType="Self.HACKATHON" />
+          <EntitySet Name="INSCRIRE" EntityType="Self.INSCRIRE" />
+          <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" />
+          <EntitySet Name="ORGANISATEUR" EntityType="Self.ORGANISATEUR" />
+          <EntitySet Name="TOKEN" EntityType="Self.TOKEN" />
+          <AssociationSet Name="inscrire_ibfk_2" Association="Self.inscrire_ibfk_2">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="INSCRIRE" EntitySet="INSCRIRE" />
+          </AssociationSet>
+          <AssociationSet Name="membre_ibfk_2" Association="Self.membre_ibfk_2">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+          </AssociationSet>
+          <AssociationSet Name="token_ibfk_1" Association="Self.token_ibfk_1">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="TOKEN" EntitySet="TOKEN" />
+          </AssociationSet>
+          <AssociationSet Name="hackathon_ibfk_1" Association="Self.hackathon_ibfk_1">
+            <End Role="ORGANISATEUR" EntitySet="ORGANISATEUR" />
+            <End Role="HACKATHON" EntitySet="HACKATHON" />
+          </AssociationSet>
+          <AssociationSet Name="inscrire_ibfk_1" Association="Self.inscrire_ibfk_1">
+            <End Role="HACKATHON" EntitySet="HACKATHON" />
+            <End Role="INSCRIRE" EntitySet="INSCRIRE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MdlHackathonStoreContainer" CdmEntityContainer="AP3_BD_HACKATHON_INITIALEntities">
+          <EntitySetMapping Name="ADMINISTRATEUR">
+            <EntityTypeMapping TypeName="MdlHackathon.ADMINISTRATEUR">
+              <MappingFragment StoreEntitySet="ADMINISTRATEUR">
+                <ScalarProperty Name="idadministrateur" ColumnName="idadministrateur" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="motpasse" ColumnName="motpasse" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EQUIPE">
+            <EntityTypeMapping TypeName="MdlHackathon.EQUIPE">
+              <MappingFragment StoreEntitySet="EQUIPE">
+                <ScalarProperty Name="idequipe" ColumnName="idequipe" />
+                <ScalarProperty Name="nomequipe" ColumnName="nomequipe" />
+                <ScalarProperty Name="lienprototype" ColumnName="lienprototype" />
+                <ScalarProperty Name="nbparticipants" ColumnName="nbparticipants" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HACKATHON">
+            <EntityTypeMapping TypeName="MdlHackathon.HACKATHON">
+              <MappingFragment StoreEntitySet="HACKATHON">
+                <ScalarProperty Name="idhackathon" ColumnName="idhackathon" />
+                <ScalarProperty Name="dateheuredebuth" ColumnName="dateheuredebuth" />
+                <ScalarProperty Name="dateheurefinh" ColumnName="dateheurefinh" />
+                <ScalarProperty Name="lieu" ColumnName="lieu" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="conditions" ColumnName="conditions" />
+                <ScalarProperty Name="thematique" ColumnName="thematique" />
+                <ScalarProperty Name="affiche" ColumnName="affiche" />
+                <ScalarProperty Name="objectifs" ColumnName="objectifs" />
+                <ScalarProperty Name="idorganisateur" ColumnName="idorganisateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INSCRIRE">
+            <EntityTypeMapping TypeName="MdlHackathon.INSCRIRE">
+              <MappingFragment StoreEntitySet="INSCRIRE">
+                <ScalarProperty Name="idhackathon" ColumnName="idhackathon" />
+                <ScalarProperty Name="idequipe" ColumnName="idequipe" />
+                <ScalarProperty Name="dateinscription" ColumnName="dateinscription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MEMBRE">
+            <EntityTypeMapping TypeName="MdlHackathon.MEMBRE">
+              <MappingFragment StoreEntitySet="MEMBRE">
+                <ScalarProperty Name="idmembre" ColumnName="idmembre" />
+                <ScalarProperty Name="idequipe" ColumnName="idequipe" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="datenaissance" ColumnName="datenaissance" />
+                <ScalarProperty Name="lienportfolio" ColumnName="lienportfolio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORGANISATEUR">
+            <EntityTypeMapping TypeName="MdlHackathon.ORGANISATEUR">
+              <MappingFragment StoreEntitySet="ORGANISATEUR">
+                <ScalarProperty Name="idorganisateur" ColumnName="idorganisateur" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TOKEN">
+            <EntityTypeMapping TypeName="MdlHackathon.TOKEN">
+              <MappingFragment StoreEntitySet="TOKEN">
+                <ScalarProperty Name="uuid" ColumnName="uuid" />
+                <ScalarProperty Name="idequipe" ColumnName="idequipe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
