@@ -35,14 +35,14 @@
             this.BtnFermer = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.dgvEquipes = new System.Windows.Forms.DataGridView();
             this.BSHackathon = new System.Windows.Forms.BindingSource(this.components);
             this.BSEquipe = new System.Windows.Forms.BindingSource(this.components);
-            this.dgvEquipes = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHackathon)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEquipes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BSHackathon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BSEquipe)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEquipes)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvHackathon
@@ -52,11 +52,13 @@
             this.dgvHackathon.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvHackathon.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHackathon.ContextMenuStrip = this.contextMenuStrip1;
-            this.dgvHackathon.Location = new System.Drawing.Point(41, 46);
+            this.dgvHackathon.Location = new System.Drawing.Point(55, 57);
+            this.dgvHackathon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvHackathon.MultiSelect = false;
             this.dgvHackathon.Name = "dgvHackathon";
             this.dgvHackathon.ReadOnly = true;
-            this.dgvHackathon.Size = new System.Drawing.Size(706, 258);
+            this.dgvHackathon.RowHeadersWidth = 51;
+            this.dgvHackathon.Size = new System.Drawing.Size(941, 318);
             this.dgvHackathon.TabIndex = 0;
             this.dgvHackathon.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvHackathon_CellContentClick);
             this.dgvHackathon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DgvHackathon_CellContentClick);
@@ -65,15 +67,16 @@
             // 
             // contextMenuStrip1
             // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.voirLesÉquipesToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(156, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(183, 28);
             // 
             // voirLesÉquipesToolStripMenuItem
             // 
             this.voirLesÉquipesToolStripMenuItem.Name = "voirLesÉquipesToolStripMenuItem";
-            this.voirLesÉquipesToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.voirLesÉquipesToolStripMenuItem.Size = new System.Drawing.Size(182, 24);
             this.voirLesÉquipesToolStripMenuItem.Text = "Voir les équipes";
             this.voirLesÉquipesToolStripMenuItem.Click += new System.EventHandler(this.VoirLesÉquipesToolStripMenuItem_Click);
             // 
@@ -83,9 +86,10 @@
             this.BtnFermer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.BtnFermer.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnFermer.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.BtnFermer.Location = new System.Drawing.Point(652, 310);
+            this.BtnFermer.Location = new System.Drawing.Point(869, 382);
+            this.BtnFermer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BtnFermer.Name = "BtnFermer";
-            this.BtnFermer.Size = new System.Drawing.Size(95, 51);
+            this.BtnFermer.Size = new System.Drawing.Size(127, 63);
             this.BtnFermer.TabIndex = 1;
             this.BtnFermer.Text = "FERMER";
             this.BtnFermer.UseVisualStyleBackColor = false;
@@ -95,9 +99,10 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(37, 19);
+            this.label1.Location = new System.Drawing.Point(49, 23);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(208, 24);
+            this.label1.Size = new System.Drawing.Size(261, 29);
             this.label1.TabIndex = 2;
             this.label1.Text = "Liste des Hackathons";
             // 
@@ -106,9 +111,10 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label2.Location = new System.Drawing.Point(37, 324);
+            this.label2.Location = new System.Drawing.Point(49, 399);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(423, 20);
+            this.label2.Size = new System.Drawing.Size(522, 25);
             this.label2.TabIndex = 4;
             this.label2.Text = "click droit sur l\'hackathon sélectionné pour voir ses équipes";
             // 
@@ -117,33 +123,36 @@
             this.dgvEquipes.AllowUserToAddRows = false;
             this.dgvEquipes.AllowUserToDeleteRows = false;
             this.dgvEquipes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvEquipes.Location = new System.Drawing.Point(332, 154);
+            this.dgvEquipes.Location = new System.Drawing.Point(443, 190);
+            this.dgvEquipes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvEquipes.Name = "dgvEquipes";
             this.dgvEquipes.ReadOnly = true;
-            this.dgvEquipes.Size = new System.Drawing.Size(357, 150);
+            this.dgvEquipes.RowHeadersWidth = 51;
+            this.dgvEquipes.Size = new System.Drawing.Size(476, 185);
             this.dgvEquipes.TabIndex = 5;
             this.dgvEquipes.Visible = false;
             // 
             // FormHackathon
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkOliveGreen;
-            this.ClientSize = new System.Drawing.Size(784, 384);
+            this.ClientSize = new System.Drawing.Size(1045, 473);
             this.Controls.Add(this.dgvEquipes);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BtnFermer);
             this.Controls.Add(this.dgvHackathon);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FormHackathon";
             this.Text = "Gestion des Hackathons";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHackathon)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEquipes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BSHackathon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BSEquipe)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvEquipes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

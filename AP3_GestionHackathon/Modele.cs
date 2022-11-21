@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BC = BCrypt.Net.BCrypt;
 
 namespace AP3_GestionHackathon
 {
     public static class Modele
     {
-        private static AP3_BD_HACKATHON_INITIALEntities maConnexion;
+        private static HackatonEntities maConnexion;
 
         /// <summary>
         /// initialise la connexion à la BD
         /// </summary>
         public static void init()
         {
-            maConnexion = new AP3_BD_HACKATHON_INITIALEntities();
+            maConnexion = new HackatonEntities();
         }
 
         /// <summary>
@@ -27,6 +28,22 @@ namespace AP3_GestionHackathon
         {
             return maConnexion.HACKATHON.ToList();
         }
+
+        public static List<EQUIPE> listeEquipes()
+        {
+            return maConnexion.EQUIPE.ToList();
+        }
+
+        public static List<INSCRIRE> listeInscriptions()
+        {
+            return maConnexion.INSCRIRE.ToList();
+        }
+
+        public static List<MEMBRE> listeMembres()
+        {
+            return maConnexion.MEMBRE.ToList();
+        }
+
 
         /// <summary>
         /// Retourne toute la liste des organisateurs
@@ -78,13 +95,16 @@ namespace AP3_GestionHackathon
         /// <param name="dateF"></param>
         /// <param name="idOrganisateur"></param>
         /// <returns></returns>
-        public static bool AjoutHackathon(string lieu, string ville, string thematique, string objectifs, string conditions, string affiche, DateTime dateD, DateTime dateF,int idOrganisateur)
+        /// 
+
+        #region Ajout
+        public static bool AjoutHackathon(string lieu, string ville, string thematique, string objectifs, string conditions, string affiche, DateTime dateD, DateTime dateF,int idOrganisateur, int equipMax, DateTime dateBut)
         {
             HACKATHON unHackathon;
             bool vretour = true;
             try
             {
-                // ajout dans la table commande
+                // ajout dans la table HACKATHON
                 unHackathon = new HACKATHON();
                 unHackathon.lieu = lieu;
                 unHackathon.ville = ville;
@@ -95,6 +115,8 @@ namespace AP3_GestionHackathon
                 unHackathon.dateheuredebuth = dateD;
                 unHackathon.dateheurefinh = dateF;
                 unHackathon.idorganisateur = idOrganisateur;
+                unHackathon.nbEquipMax = equipMax;
+                unHackathon.dateFinInscription = dateBut;
        
                 maConnexion.HACKATHON.Add(unHackathon);
                 maConnexion.SaveChanges();
@@ -113,19 +135,71 @@ namespace AP3_GestionHackathon
         /// </summary>
         /// <param name="idH">identifiant de l'hackathon</param>
         /// <returns></returns>
-        public static HACKATHON RecupererHackathon(int idH)
+        /// 
+
+        public static bool AjoutEquipe(string nom, string prototype, string login, string mdp, int hackathon, int nbJoueurs, DateTime dateInscri)
         {
-            HACKATHON unHackathon = new HACKATHON();
+            EQUIPE uneEquipe;
+            INSCRIRE uneInscription;
+            bool vretour = true;
             try
             {
-                unHackathon = maConnexion.HACKATHON.First(x => x.idhackathon == idH);
+                uneEquipe = new EQUIPE();
+                uneEquipe.nomequipe = nom;
+                uneEquipe.lienprototype = prototype;
+                uneEquipe.nbparticipants = nbJoueurs;
+                uneEquipe.login = login;
+                uneEquipe.password = mdp;
+
+                maConnexion.EQUIPE.Add(uneEquipe);
+
+                uneInscription = new INSCRIRE();
+                uneInscription.idhackathon = hackathon;
+                uneInscription.idequipe = uneEquipe.idequipe;
+                uneInscription.dateinscription = dateInscri;
+
+                maConnexion.INSCRIRE.Add(uneInscription);
+
+                maConnexion.SaveChanges();
             }
             catch (Exception ex)
             {
+                vretour = false;
                 MessageBox.Show(ex.Message.ToString());
             }
-            return unHackathon;
+            return vretour;
         }
+
+        public static bool AjoutMembre(string nom, string prenom, string email, DateTime dnaiss, string telephone, string portfolio, int equipe)
+        {
+            MEMBRE unMembre;
+            bool vretour = true;
+            try
+            {
+                unMembre = new MEMBRE();
+                unMembre.nom = nom;
+                unMembre.prenom = prenom;
+                unMembre.email = email;
+                unMembre.datenaissance = dnaiss;
+                unMembre.telephone = telephone;
+                unMembre.lienportfolio = portfolio;
+                unMembre.idequipe = equipe;
+                unMembre.avatar = "test";
+
+                maConnexion.MEMBRE.Add(unMembre);
+
+                maConnexion.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
+        #endregion Ajout
+
+        #region Modification
 
         /// <summary>
         /// Retourne vrai si la modification de l'hackathon dont l'identifiant est passé en paramètre a pu avoir lieu
@@ -141,7 +215,7 @@ namespace AP3_GestionHackathon
         /// <param name="dateF"></param>
         /// <param name="idOrganisateur"></param>
         /// <returns></returns>
-        public static bool ModificationHackathon(int idH, string lieu, string ville, string thematique, string objectifs, string conditions, string affiche, DateTime dateD, DateTime dateF, int idOrganisateur)
+        public static bool ModificationHackathon(int idH, string lieu, string ville, string thematique, string objectifs, string conditions, string affiche, DateTime dateD, DateTime dateF, int idOrganisateur, int equipMax, DateTime dateBut)
         {
             HACKATHON unHackathon;
             bool vretour = true;
@@ -160,6 +234,8 @@ namespace AP3_GestionHackathon
                 unHackathon.dateheuredebuth = dateD;
                 unHackathon.dateheurefinh = dateF;
                 unHackathon.idorganisateur = idOrganisateur;
+                unHackathon.nbEquipMax = equipMax;
+                unHackathon.dateFinInscription = dateBut;
 
                 maConnexion.SaveChanges();
             }
@@ -170,6 +246,208 @@ namespace AP3_GestionHackathon
             }
             return vretour;
         }
+        public static bool ModifierEquipe(int idE, string nom, string proto, string login, string mdp, int nbJoueurs)
+        {
+            EQUIPE uneEquipe;
+            bool vretour = true;
+
+            try
+            {
+                // Récupération de l'équipe à modifier
+                uneEquipe = RecupererEquipe(idE);
+
+                // Modification des données de l'équipe
+                uneEquipe.nomequipe = nom;
+                uneEquipe.lienprototype = proto;
+                uneEquipe.login = login;
+                uneEquipe.password = mdp;
+                uneEquipe.nbparticipants = nbJoueurs;
+
+                maConnexion.SaveChanges();
+            }
+
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
+
+        public static bool ModifierMembre(int idM, string nom, string prenom, string email, DateTime dnaiss, string telephone, string portfolio, int idEquipe)
+        {
+            MEMBRE unMembre;
+            bool vretour = true;
+
+            try
+            {
+                // Récupération du membre à modifier
+                unMembre = RecupererMembre(idM);
+
+                // Modification des données du membre
+                unMembre.nom = nom;
+                unMembre.prenom = prenom;
+                unMembre.email = email;
+                unMembre.datenaissance = dnaiss;
+                unMembre.telephone = telephone;
+                unMembre.lienportfolio = portfolio;
+                unMembre.idequipe = idEquipe;
+
+                maConnexion.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
+        #endregion Modification
+
+        #region Suppression
+        public static bool SupprimerHackathon(int idH)
+        {
+            bool vretour = true;
+            try
+            {
+                HACKATHON unHackathon = RecupererHackathon(idH);
+                maConnexion.HACKATHON.Remove(unHackathon);
+                maConnexion.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message + " " +
+               ex.InnerException.InnerException.Message);
+                vretour = false;
+            }
+            return vretour;
+        }
+
+        public static bool supprimerEquipe(int idE)
+        {
+            bool vretour = true;
+
+            try
+            {
+                EQUIPE uneEquipe = RecupererEquipe(idE);
+                maConnexion.EQUIPE.Remove(uneEquipe);
+                maConnexion.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + " " +
+                ex.InnerException.InnerException.Message);
+                vretour = false;
+            }
+            return vretour;
+        }
+
+        public static bool supprimerMembre(int idM)
+        {
+            bool vretour = true;
+
+            try
+            {
+                MEMBRE unMembre = RecupererMembre(idM);
+                maConnexion.MEMBRE.Remove(unMembre);
+                maConnexion.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + " " +
+                ex.InnerException.InnerException.Message);
+                vretour = false;
+            }
+            return vretour;
+        }
+        #endregion Suppression
+
+        #region Archivage
+        public static bool ArchiverHackathon(int idH)
+        {
+            HACKATHON unHackathon;
+            bool vretour = true;
+            try
+            {
+                unHackathon = RecupererHackathon(idH);
+
+                unHackathon.estArchive = true;
+
+                maConnexion.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
+        public static bool ArchiverEquipe(int idE)
+        {
+            EQUIPE uneEquipe;
+            bool vretour = true;
+            try
+            {
+                uneEquipe = RecupererEquipe(idE);
+
+                uneEquipe.estArchive = true;
+
+                maConnexion.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+                vretour = false;
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return vretour;
+        }
+        #endregion Archivage
+
+        #region Recuperation
+        public static HACKATHON RecupererHackathon(int idH)
+        {
+            HACKATHON unHackathon = new HACKATHON();
+            try
+            {
+                unHackathon = maConnexion.HACKATHON.First(x => x.idhackathon == idH);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return unHackathon;
+        }
+
+        public static EQUIPE RecupererEquipe(int idE)
+        {
+            EQUIPE uneEquipe = new EQUIPE();
+            try
+            {
+                uneEquipe = maConnexion.EQUIPE.First(x => x.idequipe == idE);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return uneEquipe;
+        }
+
+        public static MEMBRE RecupererMembre(int idM)
+        {
+            MEMBRE unMembre = new MEMBRE();
+            try
+            {
+                unMembre = maConnexion.MEMBRE.First(x => x.idmembre == idM);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return unMembre;
+        }
+        #endregion Recuperation
 
 
         /// <summary>
@@ -202,5 +480,27 @@ namespace AP3_GestionHackathon
             }
             return vretour;
         }
+
+        public static bool VerifAdmin(string mail, string mdp)
+        {
+            bool connecter = false;
+            ADMINISTRATEUR admin = new ADMINISTRATEUR();
+
+            try
+            {
+                admin = maConnexion.ADMINISTRATEUR.First(x => x.email == mail);
+                if(BC.Verify(mdp , admin.motpasse))
+                {
+                    connecter = true;
+                }
+            }
+            catch
+            {
+
+            }
+            return connecter;
+        }
+
+
     }
 }

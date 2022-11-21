@@ -19,19 +19,25 @@ namespace AP3_GestionHackathon
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            BSHackathon.DataSource = Modele.listeHackathons().Select(x => new { x.idhackathon, x.thematique, x.lieu, x.ville, x.dateheuredebuth, x.dateheurefinh, x.objectifs, x.ORGANISATEUR.nom, x.ORGANISATEUR.prenom })
+            BSHackathon.DataSource = Modele.listeHackathons().Select(x => new { x.idhackathon, x.thematique, x.nbEquipMax ,x.lieu, x.ville, x.dateheuredebuth, x.dateheurefinh, x.dateFinInscription ,x.objectifs, x.ORGANISATEUR.nom, x.ORGANISATEUR.prenom, x.estArchive })
+                           .Where(x => x.estArchive == false)
                            .OrderBy(x => x.dateheuredebuth); 
 
             dgvHackathon.DataSource = BSHackathon;
             dgvHackathon.Columns[0].HeaderText = "Identifiant";
             dgvHackathon.Columns[1].HeaderText = "Thématique";
-            dgvHackathon.Columns[2].HeaderText = "Lieu";
-            dgvHackathon.Columns[3].HeaderText = "Ville";
-            dgvHackathon.Columns[4].HeaderText = "Date de début";
-            dgvHackathon.Columns[5].HeaderText = "Date de fin";
-            dgvHackathon.Columns[6].HeaderText = "Objectifs";
-            dgvHackathon.Columns[7].HeaderText = "Nom Organisateur";
-            dgvHackathon.Columns[8].HeaderText = "Prénom Organisateur";
+            dgvHackathon.Columns[2].HeaderText = "Nombre d'équipes maximum";
+            dgvHackathon.Columns[3].HeaderText = "Lieu";
+            dgvHackathon.Columns[4].HeaderText = "Ville";
+            dgvHackathon.Columns[5].HeaderText = "Date de début";
+            dgvHackathon.Columns[6].HeaderText = "Date de fin";
+            dgvHackathon.Columns[7].HeaderText = "Date butoire d'inscription";
+            dgvHackathon.Columns[8].HeaderText = "Objectifs";
+            dgvHackathon.Columns[9].HeaderText = "Nom Organisateur";
+            dgvHackathon.Columns[10].HeaderText = "Prénom Organisateur";
+
+            // Masque la colonne estArchivé (potentiellement obsolète)
+            dgvHackathon.Columns[11].Visible = false;
         }
 
         private void BtnFermer_Click(object sender, EventArgs e)
@@ -52,7 +58,7 @@ namespace AP3_GestionHackathon
                     x.nomequipe,
                     x.nbparticipants
                 });
-
+                
                 dgvEquipes.DataSource = BSEquipe;
                 dgvEquipes.Visible = true;
             }

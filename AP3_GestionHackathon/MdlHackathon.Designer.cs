@@ -1,4 +1,4 @@
-﻿// La génération de code T4 est activée pour le modèle 'C:\Users\carin\Documents\2022-2023\AP3\AP3_GestionHackathon\AP3_GestionHackathon\MdlHackathon.edmx'. 
+﻿// La génération de code T4 est activée pour le modèle 'E:\AP 2an\Git\HackatinnovCsharp\AP3_GestionHackathon\MdlHackathon.edmx'. 
 // Pour activer la génération de code héritée, définissez la valeur de la propriété
 // du concepteur 'Stratégie de génération de code' sur 'ObjectContext hérité'. Cette propriété est disponible dans la fenêtre Propriétés lorsque le modèle
 //  est ouvert dans le concepteur.

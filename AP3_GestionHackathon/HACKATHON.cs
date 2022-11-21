@@ -30,6 +30,10 @@ namespace AP3_GestionHackathon
         public string affiche { get; set; }
         public string objectifs { get; set; }
         public Nullable<int> idorganisateur { get; set; }
+        public int nbEquipMax { get; set; }
+        public System.DateTime dateFinInscription { get; set; }
+        public bool estArchive { get; set; }
+        public int nbMembreMax { get; set; }
     
         public virtual ORGANISATEUR ORGANISATEUR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

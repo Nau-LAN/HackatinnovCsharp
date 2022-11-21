@@ -20,6 +20,7 @@ namespace AP3_GestionHackathon
             this.INSCRIRE = new HashSet<INSCRIRE>();
             this.MEMBRE = new HashSet<MEMBRE>();
             this.TOKEN = new HashSet<TOKEN>();
+            this.MEMBRE1 = new HashSet<MEMBRE>();
         }
     
         public int idequipe { get; set; }
@@ -28,6 +29,7 @@ namespace AP3_GestionHackathon
         public Nullable<long> nbparticipants { get; set; }
         public string login { get; set; }
         public string password { get; set; }
+        public bool estArchive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<INSCRIRE> INSCRIRE { get; set; }
@@ -35,5 +37,7 @@ namespace AP3_GestionHackathon
         public virtual ICollection<MEMBRE> MEMBRE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TOKEN> TOKEN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MEMBRE> MEMBRE1 { get; set; }
     }
 }

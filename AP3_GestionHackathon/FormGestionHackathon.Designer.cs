@@ -53,10 +53,16 @@
             this.BtnAjoutOrganisateur = new System.Windows.Forms.Button();
             this.BSOrganisateur = new System.Windows.Forms.BindingSource(this.components);
             this.gbInfo = new System.Windows.Forms.GroupBox();
+            this.equipesMaxBox = new System.Windows.Forms.NumericUpDown();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.dateButoirePicker = new System.Windows.Forms.DateTimePicker();
             this.cbListe = new System.Windows.Forms.ComboBox();
             this.BSListeH = new System.Windows.Forms.BindingSource(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.BSOrganisateur)).BeginInit();
             this.gbInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.equipesMaxBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BSListeH)).BeginInit();
             this.SuspendLayout();
             // 
@@ -157,7 +163,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(23, 131);
+            this.label6.Location = new System.Drawing.Point(24, 171);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(33, 16);
             this.label6.TabIndex = 13;
@@ -167,7 +173,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(23, 193);
+            this.label7.Location = new System.Drawing.Point(23, 215);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(34, 16);
             this.label7.TabIndex = 14;
@@ -184,7 +190,7 @@
             // tbLieu
             // 
             this.tbLieu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbLieu.Location = new System.Drawing.Point(23, 150);
+            this.tbLieu.Location = new System.Drawing.Point(23, 190);
             this.tbLieu.Name = "tbLieu";
             this.tbLieu.Size = new System.Drawing.Size(199, 22);
             this.tbLieu.TabIndex = 16;
@@ -192,7 +198,7 @@
             // tbVille
             // 
             this.tbVille.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbVille.Location = new System.Drawing.Point(24, 212);
+            this.tbVille.Location = new System.Drawing.Point(23, 234);
             this.tbVille.Name = "tbVille";
             this.tbVille.Size = new System.Drawing.Size(199, 22);
             this.tbVille.TabIndex = 17;
@@ -228,6 +234,7 @@
             // 
             // cbOrganisateur
             // 
+            this.cbOrganisateur.CausesValidation = false;
             this.cbOrganisateur.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbOrganisateur.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbOrganisateur.FormattingEnabled = true;
@@ -284,6 +291,10 @@
             // 
             // gbInfo
             // 
+            this.gbInfo.Controls.Add(this.equipesMaxBox);
+            this.gbInfo.Controls.Add(this.label12);
+            this.gbInfo.Controls.Add(this.label11);
+            this.gbInfo.Controls.Add(this.dateButoirePicker);
             this.gbInfo.Controls.Add(this.dtDebut);
             this.gbInfo.Controls.Add(this.BtnAjoutOrganisateur);
             this.gbInfo.Controls.Add(this.label2);
@@ -313,6 +324,40 @@
             this.gbInfo.TabStop = false;
             this.gbInfo.Text = "Informations de l\'hackathon";
             // 
+            // equipesMaxBox
+            // 
+            this.equipesMaxBox.Location = new System.Drawing.Point(483, 205);
+            this.equipesMaxBox.Name = "equipesMaxBox";
+            this.equipesMaxBox.Size = new System.Drawing.Size(120, 22);
+            this.equipesMaxBox.TabIndex = 30;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(480, 174);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(86, 16);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "Equipes max";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(20, 127);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(156, 16);
+            this.label11.TabIndex = 27;
+            this.label11.Text = "Date Butoire d\'inscription";
+            // 
+            // dateButoirePicker
+            // 
+            this.dateButoirePicker.CustomFormat = "dd/MM/yyyy HH:mm";
+            this.dateButoirePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateButoirePicker.Location = new System.Drawing.Point(23, 146);
+            this.dateButoirePicker.Name = "dateButoirePicker";
+            this.dateButoirePicker.Size = new System.Drawing.Size(200, 22);
+            this.dateButoirePicker.TabIndex = 26;
+            // 
             // cbListe
             // 
             this.cbListe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -327,6 +372,11 @@
             // BSListeH
             // 
             this.BSListeH.CurrentChanged += new System.EventHandler(this.BSListeH_CurrentChanged);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // FormGestionHackathon
             // 
@@ -345,6 +395,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BSOrganisateur)).EndInit();
             this.gbInfo.ResumeLayout(false);
             this.gbInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.equipesMaxBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BSListeH)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -379,5 +430,10 @@
         private System.Windows.Forms.GroupBox gbInfo;
         private System.Windows.Forms.ComboBox cbListe;
         private System.Windows.Forms.BindingSource BSListeH;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DateTimePicker dateButoirePicker;
+        private System.Windows.Forms.NumericUpDown equipesMaxBox;
     }
 }

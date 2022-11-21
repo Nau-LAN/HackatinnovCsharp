@@ -17,14 +17,11 @@ namespace AP3_GestionHackathon
             InitializeComponent();
         }
 
-        private void QUITTERToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DECONNEXIONToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
-        }
-
-        private void ListeDesHackathonsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            openChildForm(new FormHackathon());
+            FormConnexion FM = new FormConnexion();
+            FM.Show();
+            this.Close();
         }
 
         private void PanelPrincipal_Paint(object sender, PaintEventArgs e)
@@ -53,14 +50,77 @@ namespace AP3_GestionHackathon
 
         }
 
+        #region hackathon
+        private void ListeDesHackathonsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormHackathon());
+        }
+
         private void GestionDesHackathonsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openChildForm(new FormGestionHackathon(EtatGestion.Create)); // Form de Gestion en ajout (create)
         }
 
-        private void ModificationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void modificationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openChildForm(new FormGestionHackathon(EtatGestion.Update)); // Form de Gestion en modification (update)
         }
+
+        private void suppressionToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionHackathon(EtatGestion.Delete)); // Form de gestion en suppression (delete)
+        }
+
+        private void archivageToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionHackathon(EtatGestion.Archive)); // Form de gestion en archivage (archive)
+        }
+        #endregion hackathon
+
+
+        #region equipe
+        private void ListeDesÉquipesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormEquipes());
+        }
+
+        private void AjouterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionEquipes(GestionEquipes.Create)); // Création d'une équipe
+        }
+        private void modifierUneÉquipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionEquipes(GestionEquipes.Update)); // Modification d'une équipe
+        }
+
+        private void supprimerUneÉquipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionEquipes(GestionEquipes.Delete)); // Suppression d'une équipe
+        }
+
+        private void archiverUneÉquipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionEquipes(GestionEquipes.Archive)); // Archivage d'une équipe
+        }
+
+        #endregion equipe
+
+        #region membre
+        private void ajouterUnMembreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionMembre(EtatMembre.Create)); // Ajout d'un membre
+        }
+        private void modifierUnMembreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionMembre(EtatMembre.Update)); // Modification d'un membre
+        }
+
+        private void effacerUnMembreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormGestionMembre(EtatMembre.Delete)); //Suppression d'un membre
+        }
+        #endregion membre
+
+
     }
 }

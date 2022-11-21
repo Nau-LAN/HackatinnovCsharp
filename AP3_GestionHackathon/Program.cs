@@ -18,7 +18,7 @@ namespace AP3_GestionHackathon
             Modele.init();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMenu());
+            Application.Run(new FormConnexion());
         }
     }
 }

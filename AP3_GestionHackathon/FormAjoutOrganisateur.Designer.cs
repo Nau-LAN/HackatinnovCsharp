@@ -152,7 +152,6 @@
             this.Name = "FormAjoutOrganisateur";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ajout d\'un Organisateur";
-            this.Load += new System.EventHandler(this.FormAjoutOrganisateur_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

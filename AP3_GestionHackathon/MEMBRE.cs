@@ -22,7 +22,11 @@ namespace AP3_GestionHackathon
         public string telephone { get; set; }
         public Nullable<System.DateTime> datenaissance { get; set; }
         public string lienportfolio { get; set; }
+        public Nullable<int> idancienneequipe { get; set; }
+        public Nullable<System.DateTime> date_supp_equipe { get; set; }
+        public string avatar { get; set; }
     
         public virtual EQUIPE EQUIPE { get; set; }
+        public virtual EQUIPE EQUIPE1 { get; set; }
     }
 }
