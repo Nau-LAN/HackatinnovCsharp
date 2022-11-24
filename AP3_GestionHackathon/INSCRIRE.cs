@@ -17,6 +17,7 @@ namespace AP3_GestionHackathon
         public int idhackathon { get; set; }
         public int idequipe { get; set; }
         public System.DateTime dateinscription { get; set; }
+        public Nullable<System.DateTime> dateDesinscription { get; set; }
     
         public virtual EQUIPE EQUIPE { get; set; }
         public virtual HACKATHON HACKATHON { get; set; }

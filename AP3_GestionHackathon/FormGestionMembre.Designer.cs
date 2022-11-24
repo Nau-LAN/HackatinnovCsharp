@@ -97,6 +97,7 @@
             // 
             // dtpDnaiss
             // 
+            this.dtpDnaiss.CustomFormat = "aaaa-MM-jj";
             this.dtpDnaiss.Location = new System.Drawing.Point(361, 252);
             this.dtpDnaiss.Name = "dtpDnaiss";
             this.dtpDnaiss.Size = new System.Drawing.Size(261, 26);

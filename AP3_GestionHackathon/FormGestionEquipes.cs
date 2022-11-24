@@ -118,15 +118,22 @@ namespace AP3_GestionHackathon
                 hackathon = cbInscription.SelectedIndex;
                 dateInscri = dtpInscription.Value;
 
-                if(etat == GestionEquipes.Create) // ajout équipe
+
+
+                if (etat == GestionEquipes.Create) // ajout équipe
                 {
                     if(cbInscription.SelectedIndex != -1)
                     {
+
                         if (Modele.AjoutEquipe(nom, prototype, login, mdp, hackathon, nbJoueurs, dateInscri))
                         {
                             MessageBox.Show("Equipe ajoutée");
                             Annuler();
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Veuillez inscrire votre équipe à un hackathon avant insertion.");
                     }
 
                 }
@@ -164,11 +171,11 @@ namespace AP3_GestionHackathon
                 {
                     EQUIPE E = (EQUIPE)BSequipes.Current;
 
-                    DialogResult dialogResult = MessageBox.Show("Voulez-vous archiver cette équipe ?", "Confirmer", MessageBoxButtons.YesNo);
+                    DialogResult dialogResult = MessageBox.Show("Vous allez désinscrire cette équipe. Confirmer ?" , "Attention", MessageBoxButtons.YesNo);
 
                     if (dialogResult == DialogResult.Yes)
                     {
-                        if (Modele.ArchiverEquipe(E.idequipe))
+                        if (Modele.ArchiverEquipe(E.idequipe, hackathon))
                         {
                             MessageBox.Show("Equipe archivée");
                             gbInfo.Visible = false;

@@ -47,6 +47,7 @@
             this.ajouterUnMembreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifierUnMembreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.effacerUnMembreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sUIVIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DECONNEXIONToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelPrincipal = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -62,6 +63,7 @@
             this.hACKATHONToolStripMenuItem,
             this.eQUIPEToolStripMenuItem,
             this.mEMBREToolStripMenuItem,
+            this.sUIVIToolStripMenuItem,
             this.DECONNEXIONToolStripMenuItem});
             this.menuStripPrincipal.Location = new System.Drawing.Point(0, 0);
             this.menuStripPrincipal.Name = "menuStripPrincipal";
@@ -159,8 +161,8 @@
             // archiverUneÉquipeToolStripMenuItem
             // 
             this.archiverUneÉquipeToolStripMenuItem.Name = "archiverUneÉquipeToolStripMenuItem";
-            this.archiverUneÉquipeToolStripMenuItem.Size = new System.Drawing.Size(239, 26);
-            this.archiverUneÉquipeToolStripMenuItem.Text = "Archiver une équipe";
+            this.archiverUneÉquipeToolStripMenuItem.Size = new System.Drawing.Size(242, 26);
+            this.archiverUneÉquipeToolStripMenuItem.Text = "Désinscrire une équipe";
             this.archiverUneÉquipeToolStripMenuItem.Click += new System.EventHandler(this.archiverUneÉquipeToolStripMenuItem_Click);
             // 
             // mEMBREToolStripMenuItem
@@ -179,6 +181,7 @@
             this.listeDesMembresToolStripMenuItem.Name = "listeDesMembresToolStripMenuItem";
             this.listeDesMembresToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
             this.listeDesMembresToolStripMenuItem.Text = "Liste des membres";
+            this.listeDesMembresToolStripMenuItem.Click += new System.EventHandler(this.listeDesMembresToolStripMenuItem_Click);
             // 
             // ajouterUnMembreToolStripMenuItem
             // 
@@ -200,6 +203,13 @@
             this.effacerUnMembreToolStripMenuItem.Size = new System.Drawing.Size(229, 26);
             this.effacerUnMembreToolStripMenuItem.Text = "Effacer un membre";
             this.effacerUnMembreToolStripMenuItem.Click += new System.EventHandler(this.effacerUnMembreToolStripMenuItem_Click);
+            // 
+            // sUIVIToolStripMenuItem
+            // 
+            this.sUIVIToolStripMenuItem.Name = "sUIVIToolStripMenuItem";
+            this.sUIVIToolStripMenuItem.Size = new System.Drawing.Size(58, 24);
+            this.sUIVIToolStripMenuItem.Text = "SUIVI";
+            this.sUIVIToolStripMenuItem.Click += new System.EventHandler(this.sUIVIToolStripMenuItem_Click);
             // 
             // DECONNEXIONToolStripMenuItem
             // 
@@ -276,5 +286,6 @@
         private System.Windows.Forms.ToolStripMenuItem ajouterUnMembreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifierUnMembreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem effacerUnMembreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sUIVIToolStripMenuItem;
     }
 }

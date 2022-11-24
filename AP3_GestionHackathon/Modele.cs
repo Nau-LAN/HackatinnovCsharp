@@ -101,6 +101,7 @@ namespace AP3_GestionHackathon
         public static bool AjoutHackathon(string lieu, string ville, string thematique, string objectifs, string conditions, string affiche, DateTime dateD, DateTime dateF,int idOrganisateur, int equipMax, DateTime dateBut)
         {
             HACKATHON unHackathon;
+            SUIVI unSuivi;
             bool vretour = true;
             try
             {
@@ -119,6 +120,13 @@ namespace AP3_GestionHackathon
                 unHackathon.dateFinInscription = dateBut;
        
                 maConnexion.HACKATHON.Add(unHackathon);
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Ajout du hackathon " + thematique;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
+
                 maConnexion.SaveChanges();
                                
             }
@@ -141,6 +149,7 @@ namespace AP3_GestionHackathon
         {
             EQUIPE uneEquipe;
             INSCRIRE uneInscription;
+            SUIVI unSuivi;
             bool vretour = true;
             try
             {
@@ -159,6 +168,12 @@ namespace AP3_GestionHackathon
                 uneInscription.dateinscription = dateInscri;
 
                 maConnexion.INSCRIRE.Add(uneInscription);
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Inscription de l'équipe " + nom + " au hackathon " + uneInscription.HACKATHON.thematique;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
 
                 maConnexion.SaveChanges();
             }
@@ -187,6 +202,8 @@ namespace AP3_GestionHackathon
                 unMembre.avatar = "test";
 
                 maConnexion.MEMBRE.Add(unMembre);
+
+
 
                 maConnexion.SaveChanges();
             }
@@ -218,6 +235,7 @@ namespace AP3_GestionHackathon
         public static bool ModificationHackathon(int idH, string lieu, string ville, string thematique, string objectifs, string conditions, string affiche, DateTime dateD, DateTime dateF, int idOrganisateur, int equipMax, DateTime dateBut)
         {
             HACKATHON unHackathon;
+            SUIVI unSuivi;
             bool vretour = true;
             try
             {
@@ -237,6 +255,12 @@ namespace AP3_GestionHackathon
                 unHackathon.nbEquipMax = equipMax;
                 unHackathon.dateFinInscription = dateBut;
 
+                unSuivi = new SUIVI();
+                unSuivi.description = "Modification du hackathon " + thematique;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
+
                 maConnexion.SaveChanges();
             }
             catch (Exception ex)
@@ -249,6 +273,7 @@ namespace AP3_GestionHackathon
         public static bool ModifierEquipe(int idE, string nom, string proto, string login, string mdp, int nbJoueurs)
         {
             EQUIPE uneEquipe;
+            SUIVI unSuivi;
             bool vretour = true;
 
             try
@@ -260,8 +285,13 @@ namespace AP3_GestionHackathon
                 uneEquipe.nomequipe = nom;
                 uneEquipe.lienprototype = proto;
                 uneEquipe.login = login;
-                uneEquipe.password = mdp;
                 uneEquipe.nbparticipants = nbJoueurs;
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Modification de l'équipe " + nom;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
 
                 maConnexion.SaveChanges();
             }
@@ -307,11 +337,19 @@ namespace AP3_GestionHackathon
         #region Suppression
         public static bool SupprimerHackathon(int idH)
         {
+            SUIVI unSuivi;
             bool vretour = true;
             try
             {
                 HACKATHON unHackathon = RecupererHackathon(idH);
                 maConnexion.HACKATHON.Remove(unHackathon);
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Suppression du hackathon " + unHackathon.thematique;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
+
                 maConnexion.SaveChanges();
             }
             catch (Exception ex)
@@ -325,12 +363,19 @@ namespace AP3_GestionHackathon
 
         public static bool supprimerEquipe(int idE)
         {
+            SUIVI unSuivi;
             bool vretour = true;
-
             try
             {
                 EQUIPE uneEquipe = RecupererEquipe(idE);
                 maConnexion.EQUIPE.Remove(uneEquipe);
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Suppression de l'équipe " + uneEquipe.nomequipe;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
+
                 maConnexion.SaveChanges();
             }
             catch (Exception ex)
@@ -344,12 +389,19 @@ namespace AP3_GestionHackathon
 
         public static bool supprimerMembre(int idM)
         {
+            SUIVI unSuivi;
             bool vretour = true;
-
             try
             {
                 MEMBRE unMembre = RecupererMembre(idM);
                 maConnexion.MEMBRE.Remove(unMembre);
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Désinscription du joueur " + unMembre.prenom + " " + unMembre.nom;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
+
                 maConnexion.SaveChanges();
             }
             catch (Exception ex)
@@ -365,6 +417,7 @@ namespace AP3_GestionHackathon
         #region Archivage
         public static bool ArchiverHackathon(int idH)
         {
+            SUIVI unSuivi;
             HACKATHON unHackathon;
             bool vretour = true;
             try
@@ -372,6 +425,12 @@ namespace AP3_GestionHackathon
                 unHackathon = RecupererHackathon(idH);
 
                 unHackathon.estArchive = true;
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Archivage du hackathon " + unHackathon.thematique;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
 
                 maConnexion.SaveChanges();
 
@@ -383,15 +442,25 @@ namespace AP3_GestionHackathon
             }
             return vretour;
         }
-        public static bool ArchiverEquipe(int idE)
+        public static bool ArchiverEquipe(int idE, int idH)
         {
+            SUIVI unSuivi;
             EQUIPE uneEquipe;
+            INSCRIRE uneInscription;
             bool vretour = true;
             try
             {
                 uneEquipe = RecupererEquipe(idE);
+                uneInscription = RecupererInscription(idH, idE);
 
                 uneEquipe.estArchive = true;
+                uneInscription.dateDesinscription = DateTime.Now;
+
+                unSuivi = new SUIVI();
+                unSuivi.description = "Archivage de l'équipe " + uneEquipe.nomequipe;
+                unSuivi.dateAction = DateTime.Now;
+
+                maConnexion.SUIVI.Add(unSuivi);
 
                 maConnexion.SaveChanges();
 
@@ -447,6 +516,21 @@ namespace AP3_GestionHackathon
             }
             return unMembre;
         }
+
+        public static INSCRIRE RecupererInscription(int idH, int idE)
+        {
+            INSCRIRE uneInscription = new INSCRIRE();
+            try
+            {
+                uneInscription = maConnexion.INSCRIRE.Find(idH, idE);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+            return uneInscription;
+        }
+
         #endregion Recuperation
 
 

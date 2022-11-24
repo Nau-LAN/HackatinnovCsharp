@@ -15,7 +15,6 @@ namespace AP3_GestionHackathon
         Create,
         Update,
         Delete,
-        Archive
     }
 
     public partial class FormGestionMembre : Form
@@ -32,8 +31,8 @@ namespace AP3_GestionHackathon
         {
             cbMembres.ValueMember = "idmembre";
             cbMembres.DisplayMember = "prenom";
-            bsEquipe.DataSource = Modele.listeMembres();
-            cbMembres.DataSource = bsEquipe;
+            bsMembre.DataSource = Modele.listeMembres();
+            cbMembres.DataSource = bsMembre;
             cbMembres.SelectedIndex = -1;
         }
 
@@ -63,7 +62,6 @@ namespace AP3_GestionHackathon
                 lblTitre.Text = "Modifier un membre";
                 cbMembres.Visible = true;
                 BtnAction.Text = "MODIFIER";
-                Desactiver();
             }
             if (etat == EtatMembre.Delete)
             {
@@ -72,19 +70,13 @@ namespace AP3_GestionHackathon
                 BtnAction.Text = "EFFACER";
                 Desactiver();
             }
-            if (etat == EtatMembre.Archive)
-            {
-                lblTitre.Text = "Archiver un membre";
-                cbMembres.Visible = true;
-                BtnAction.Text = "ARCHIVER";
-                Desactiver();
-            }
+
         }
 
         private void BtnAction_Click(object sender, EventArgs e)
         {
             string nom, prenom, email, telephone, portfolio;
-            int equipe;
+            int equipe = -1;
             DateTime dnaiss;
 
             nom = tbNom.Text;
@@ -93,7 +85,10 @@ namespace AP3_GestionHackathon
             dnaiss = dtpDnaiss.Value;
             telephone = tbTelephone.Text;
             portfolio = tbPortfolio.Text;
-            equipe = cbEquipe.SelectedIndex;
+            if(cbEquipe.SelectedIndex != 1)
+            {
+                equipe = Convert.ToInt32(cbEquipe.SelectedValue.ToString());
+            }
 
             if(etat == EtatMembre.Create)
             {
@@ -101,6 +96,15 @@ namespace AP3_GestionHackathon
                 {
                     MessageBox.Show("Membre ajouté");
                     Annuler();
+                }
+            }
+
+            if(etat == EtatMembre.Update)
+            {
+                MEMBRE M = (MEMBRE)bsMembre.Current;
+                if(Modele.ModifierMembre(M.idmembre, nom, prenom, email, dnaiss, telephone, portfolio, equipe))
+                {
+                    MessageBox.Show("Membre modifié");
                 }
             }
         }
@@ -144,7 +148,10 @@ namespace AP3_GestionHackathon
                 tbTelephone.Text = M.telephone;
                 tbPortfolio.Text = M.lienportfolio;
                 dtpDnaiss.Value = Convert.ToDateTime(M.datenaissance);
-                cbEquipe.SelectedIndex = Convert.ToInt32(M.idequipe);
+                if (M.idequipe != null)
+                {
+                    cbEquipe.Text = M.EQUIPE.nomequipe;
+                }
             }
         }
     }

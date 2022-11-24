@@ -16,14 +16,14 @@ namespace AP3_GestionHackathon
     {
         public int idmembre { get; set; }
         public Nullable<int> idequipe { get; set; }
+        public Nullable<int> idancienneequipe { get; set; }
+        public Nullable<System.DateTime> date_supp_equipe { get; set; }
         public string nom { get; set; }
         public string prenom { get; set; }
         public string email { get; set; }
         public string telephone { get; set; }
         public Nullable<System.DateTime> datenaissance { get; set; }
         public string lienportfolio { get; set; }
-        public Nullable<int> idancienneequipe { get; set; }
-        public Nullable<System.DateTime> date_supp_equipe { get; set; }
         public string avatar { get; set; }
     
         public virtual EQUIPE EQUIPE { get; set; }

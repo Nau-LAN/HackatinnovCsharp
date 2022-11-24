@@ -54,6 +54,7 @@
           <Property Name="idhackathon" Type="int" Nullable="false" />
           <Property Name="idequipe" Type="int" Nullable="false" />
           <Property Name="dateinscription" Type="date" Nullable="false" />
+          <Property Name="dateDesinscription" Type="date" />
         </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
@@ -235,11 +236,11 @@
           <Property Name="nbparticipants" Type="Int64" />
           <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="INSCRIRE" Relationship="Self.inscrire_ibfk_2" FromRole="EQUIPE" ToRole="INSCRIRE" />
-          <NavigationProperty Name="MEMBRE" Relationship="Self.membre_ibfk_2" FromRole="EQUIPE" ToRole="MEMBRE" />
-          <NavigationProperty Name="TOKEN" Relationship="Self.token_ibfk_1" FromRole="EQUIPE" ToRole="TOKEN" />
           <Property Name="estArchive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="MEMBRE1" Relationship="MdlHackathon.MEMBRE_ibfk_21" FromRole="EQUIPE" ToRole="MEMBRE" />
+          <NavigationProperty Name="INSCRIRE" Relationship="Self.inscrire_ibfk_2" FromRole="EQUIPE" ToRole="INSCRIRE" />
+          <NavigationProperty Name="MEMBRE" Relationship="Self.MEMBRE_ibfk_1" FromRole="EQUIPE" ToRole="MEMBRE" />
+          <NavigationProperty Name="MEMBRE1" Relationship="Self.MEMBRE_ibfk_2" FromRole="EQUIPE" ToRole="MEMBRE" />
+          <NavigationProperty Name="TOKEN" Relationship="Self.TOKEN_ibfk_1" FromRole="EQUIPE" ToRole="TOKEN" />
         </EntityType>
         <EntityType Name="HACKATHON">
           <Key>
@@ -256,11 +257,11 @@
           <Property Name="objectifs" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="idorganisateur" Type="Int32" />
           <Property Name="nbEquipMax" Type="Int32" Nullable="false" />
+          <Property Name="nbMembreMax" Type="Int32" Nullable="false" />
           <Property Name="dateFinInscription" Type="DateTime" Nullable="false" />
+          <Property Name="estArchive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="ORGANISATEUR" Relationship="Self.hackathon_ibfk_1" FromRole="HACKATHON" ToRole="ORGANISATEUR" />
           <NavigationProperty Name="INSCRIRE" Relationship="Self.inscrire_ibfk_1" FromRole="HACKATHON" ToRole="INSCRIRE" />
-          <Property Name="estArchive" Type="Boolean" Nullable="false" />
-          <Property Name="nbMembreMax" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="INSCRIRE">
           <Key>
@@ -272,6 +273,7 @@
           <Property Name="dateinscription" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="EQUIPE" Relationship="Self.inscrire_ibfk_2" FromRole="INSCRIRE" ToRole="EQUIPE" />
           <NavigationProperty Name="HACKATHON" Relationship="Self.inscrire_ibfk_1" FromRole="INSCRIRE" ToRole="HACKATHON" />
+          <Property Name="dateDesinscription" Type="DateTime" />
         </EntityType>
         <EntityType Name="MEMBRE">
           <Key>
@@ -279,17 +281,17 @@
           </Key>
           <Property Name="idmembre" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="idequipe" Type="Int32" />
+          <Property Name="idancienneequipe" Type="Int32" />
+          <Property Name="date_supp_equipe" Type="DateTime" />
           <Property Name="nom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="prenom" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="telephone" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="datenaissance" Type="DateTime" />
           <Property Name="lienportfolio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="EQUIPE" Relationship="Self.membre_ibfk_2" FromRole="MEMBRE" ToRole="EQUIPE" />
-          <Property Name="idancienneequipe" Type="Int32" />
-          <Property Name="date_supp_equipe" Type="DateTime" />
-          <NavigationProperty Name="EQUIPE1" Relationship="MdlHackathon.MEMBRE_ibfk_21" FromRole="MEMBRE" ToRole="EQUIPE" />
-          <Property Name="avatar" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EQUIPE" Relationship="Self.MEMBRE_ibfk_1" FromRole="MEMBRE" ToRole="EQUIPE" />
+          <NavigationProperty Name="EQUIPE1" Relationship="Self.MEMBRE_ibfk_2" FromRole="MEMBRE" ToRole="EQUIPE" />
         </EntityType>
         <EntityType Name="ORGANISATEUR">
           <Key>
@@ -301,13 +303,21 @@
           <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="HACKATHON" Relationship="Self.hackathon_ibfk_1" FromRole="ORGANISATEUR" ToRole="HACKATHON" />
         </EntityType>
+        <EntityType Name="SUIVI">
+          <Key>
+            <PropertyRef Name="idSuivi" />
+          </Key>
+          <Property Name="idSuivi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dateAction" Type="DateTime" Nullable="false" />
+        </EntityType>
         <EntityType Name="TOKEN">
           <Key>
             <PropertyRef Name="uuid" />
           </Key>
           <Property Name="uuid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="idequipe" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EQUIPE" Relationship="Self.token_ibfk_1" FromRole="TOKEN" ToRole="EQUIPE" />
+          <NavigationProperty Name="EQUIPE" Relationship="Self.TOKEN_ibfk_1" FromRole="TOKEN" ToRole="EQUIPE" />
         </EntityType>
         <Association Name="inscrire_ibfk_2">
           <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="1">
@@ -323,7 +333,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="membre_ibfk_2">
+        <Association Name="MEMBRE_ibfk_1">
           <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
@@ -337,7 +347,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="token_ibfk_1">
+        <Association Name="MEMBRE_ibfk_2">
+          <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MEMBRE" Type="Self.MEMBRE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EQUIPE">
+              <PropertyRef Name="idequipe" />
+            </Principal>
+            <Dependent Role="MEMBRE">
+              <PropertyRef Name="idancienneequipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TOKEN_ibfk_1">
           <End Role="EQUIPE" Type="Self.EQUIPE" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -384,16 +408,21 @@
           <EntitySet Name="INSCRIRE" EntityType="Self.INSCRIRE" />
           <EntitySet Name="MEMBRE" EntityType="Self.MEMBRE" />
           <EntitySet Name="ORGANISATEUR" EntityType="Self.ORGANISATEUR" />
+          <EntitySet Name="SUIVI" EntityType="Self.SUIVI" />
           <EntitySet Name="TOKEN" EntityType="Self.TOKEN" />
           <AssociationSet Name="inscrire_ibfk_2" Association="Self.inscrire_ibfk_2">
             <End Role="EQUIPE" EntitySet="EQUIPE" />
             <End Role="INSCRIRE" EntitySet="INSCRIRE" />
           </AssociationSet>
-          <AssociationSet Name="membre_ibfk_2" Association="Self.membre_ibfk_2">
+          <AssociationSet Name="MEMBRE_ibfk_1" Association="Self.MEMBRE_ibfk_1">
             <End Role="EQUIPE" EntitySet="EQUIPE" />
             <End Role="MEMBRE" EntitySet="MEMBRE" />
           </AssociationSet>
-          <AssociationSet Name="token_ibfk_1" Association="Self.token_ibfk_1">
+          <AssociationSet Name="MEMBRE_ibfk_2" Association="Self.MEMBRE_ibfk_2">
+            <End Role="EQUIPE" EntitySet="EQUIPE" />
+            <End Role="MEMBRE" EntitySet="MEMBRE" />
+          </AssociationSet>
+          <AssociationSet Name="TOKEN_ibfk_1" Association="Self.TOKEN_ibfk_1">
             <End Role="EQUIPE" EntitySet="EQUIPE" />
             <End Role="TOKEN" EntitySet="TOKEN" />
           </AssociationSet>
@@ -405,34 +434,7 @@
             <End Role="HACKATHON" EntitySet="HACKATHON" />
             <End Role="INSCRIRE" EntitySet="INSCRIRE" />
           </AssociationSet>
-          <AssociationSet Name="MEMBRE_ibfk_21" Association="MdlHackathon.MEMBRE_ibfk_21">
-            <End Role="EQUIPE" EntitySet="EQUIPE" />
-            <End Role="MEMBRE" EntitySet="MEMBRE" />
-          </AssociationSet>
-          <EntitySet Name="SUIVI" EntityType="MdlHackathon.SUIVI" />
         </EntityContainer>
-        <Association Name="MEMBRE_ibfk_21">
-          <End Type="MdlHackathon.EQUIPE" Role="EQUIPE" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="MdlHackathon.MEMBRE" Role="MEMBRE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EQUIPE">
-              <PropertyRef Name="idequipe" />
-            </Principal>
-            <Dependent Role="MEMBRE">
-              <PropertyRef Name="idancienneequipe" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SUIVI">
-          <Key>
-            <PropertyRef Name="idSuivi" />
-          </Key>
-          <Property Name="idSuivi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="description" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="dateAction" Type="DateTime" Nullable="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -453,21 +455,19 @@
           <EntitySetMapping Name="EQUIPE">
             <EntityTypeMapping TypeName="MdlHackathon.EQUIPE">
               <MappingFragment StoreEntitySet="EQUIPE">
-                <ScalarProperty Name="estArchive" ColumnName="estArchive" />
                 <ScalarProperty Name="idequipe" ColumnName="idequipe" />
                 <ScalarProperty Name="nomequipe" ColumnName="nomequipe" />
                 <ScalarProperty Name="lienprototype" ColumnName="lienprototype" />
                 <ScalarProperty Name="nbparticipants" ColumnName="nbparticipants" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="estArchive" ColumnName="estArchive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HACKATHON">
             <EntityTypeMapping TypeName="MdlHackathon.HACKATHON">
               <MappingFragment StoreEntitySet="HACKATHON">
-                <ScalarProperty Name="nbMembreMax" ColumnName="nbMembreMax" />
-                <ScalarProperty Name="estArchive" ColumnName="estArchive" />
                 <ScalarProperty Name="idhackathon" ColumnName="idhackathon" />
                 <ScalarProperty Name="dateheuredebuth" ColumnName="dateheuredebuth" />
                 <ScalarProperty Name="dateheurefinh" ColumnName="dateheurefinh" />
@@ -479,13 +479,16 @@
                 <ScalarProperty Name="objectifs" ColumnName="objectifs" />
                 <ScalarProperty Name="idorganisateur" ColumnName="idorganisateur" />
                 <ScalarProperty Name="nbEquipMax" ColumnName="nbEquipMax" />
+                <ScalarProperty Name="nbMembreMax" ColumnName="nbMembreMax" />
                 <ScalarProperty Name="dateFinInscription" ColumnName="dateFinInscription" />
+                <ScalarProperty Name="estArchive" ColumnName="estArchive" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="INSCRIRE">
             <EntityTypeMapping TypeName="MdlHackathon.INSCRIRE">
               <MappingFragment StoreEntitySet="INSCRIRE">
+                <ScalarProperty Name="dateDesinscription" ColumnName="dateDesinscription" />
                 <ScalarProperty Name="idhackathon" ColumnName="idhackathon" />
                 <ScalarProperty Name="idequipe" ColumnName="idequipe" />
                 <ScalarProperty Name="dateinscription" ColumnName="dateinscription" />
@@ -495,17 +498,17 @@
           <EntitySetMapping Name="MEMBRE">
             <EntityTypeMapping TypeName="MdlHackathon.MEMBRE">
               <MappingFragment StoreEntitySet="MEMBRE">
-                <ScalarProperty Name="avatar" ColumnName="avatar" />
-                <ScalarProperty Name="date_supp_equipe" ColumnName="date_supp_equipe" />
-                <ScalarProperty Name="idancienneequipe" ColumnName="idancienneequipe" />
                 <ScalarProperty Name="idmembre" ColumnName="idmembre" />
                 <ScalarProperty Name="idequipe" ColumnName="idequipe" />
+                <ScalarProperty Name="idancienneequipe" ColumnName="idancienneequipe" />
+                <ScalarProperty Name="date_supp_equipe" ColumnName="date_supp_equipe" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
                 <ScalarProperty Name="prenom" ColumnName="prenom" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="telephone" ColumnName="telephone" />
                 <ScalarProperty Name="datenaissance" ColumnName="datenaissance" />
                 <ScalarProperty Name="lienportfolio" ColumnName="lienportfolio" />
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -519,20 +522,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SUIVI">
+            <EntityTypeMapping TypeName="MdlHackathon.SUIVI">
+              <MappingFragment StoreEntitySet="SUIVI">
+                <ScalarProperty Name="idSuivi" ColumnName="idSuivi" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="dateAction" ColumnName="dateAction" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TOKEN">
             <EntityTypeMapping TypeName="MdlHackathon.TOKEN">
               <MappingFragment StoreEntitySet="TOKEN">
                 <ScalarProperty Name="uuid" ColumnName="uuid" />
                 <ScalarProperty Name="idequipe" ColumnName="idequipe" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SUIVI">
-            <EntityTypeMapping TypeName="MdlHackathon.SUIVI">
-              <MappingFragment StoreEntitySet="SUIVI">
-                <ScalarProperty Name="dateAction" ColumnName="dateAction" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="idSuivi" ColumnName="idSuivi" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

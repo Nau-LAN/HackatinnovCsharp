@@ -31,7 +31,7 @@ namespace AP3_GestionHackathon
         public virtual DbSet<INSCRIRE> INSCRIRE { get; set; }
         public virtual DbSet<MEMBRE> MEMBRE { get; set; }
         public virtual DbSet<ORGANISATEUR> ORGANISATEUR { get; set; }
-        public virtual DbSet<TOKEN> TOKEN { get; set; }
         public virtual DbSet<SUIVI> SUIVI { get; set; }
+        public virtual DbSet<TOKEN> TOKEN { get; set; }
     }
 }

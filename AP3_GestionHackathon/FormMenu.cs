@@ -100,12 +100,16 @@ namespace AP3_GestionHackathon
 
         private void archiverUneÉquipeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openChildForm(new FormGestionEquipes(GestionEquipes.Archive)); // Archivage d'une équipe
+            openChildForm(new FormGestionEquipes(GestionEquipes.Archive)); // Archivage et désinscritpion d'une équipe
         }
 
         #endregion equipe
 
         #region membre
+        private void listeDesMembresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormMembres());
+        }
         private void ajouterUnMembreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openChildForm(new FormGestionMembre(EtatMembre.Create)); // Ajout d'un membre
@@ -119,7 +123,13 @@ namespace AP3_GestionHackathon
         {
             openChildForm(new FormGestionMembre(EtatMembre.Delete)); //Suppression d'un membre
         }
+
         #endregion membre
+
+        private void sUIVIToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openChildForm(new FormSuivi());
+        }
 
 
     }
